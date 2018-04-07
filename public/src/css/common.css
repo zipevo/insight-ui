@@ -856,3 +856,30 @@ a.v_highlight_more {
 .uib-day button, .uib-month button, .uib-year button {
   min-width: 100%;
 }
+
+.is {
+  border-radius: 2px;
+  background: #1d71b8;
+  padding: 2px 3px;
+  color: #fff;  
+  font-size: 75%;
+  position: relative;
+}
+
+.is .tooltiptext {
+  visibility: hidden;
+  width: 90px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 5px 0;
+  position: absolute;
+  top: -23px;
+  right: -40px;
+  z-index: 1;
+}
+
+.is:hover .tooltiptext {
+  visibility: visible;
+}
