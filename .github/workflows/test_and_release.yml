@@ -27,8 +27,6 @@ jobs:
         with:
           node-version: '20'
 
-      - uses: browser-actions/setup-chrome@v1
-
       - name: Enable NPM cache
         uses: actions/cache@v2
         with:
