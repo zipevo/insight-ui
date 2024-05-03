@@ -9,8 +9,6 @@ const StatusPage = require('../../lib/test/pages/StatusPage');
 const BlockPage = require('../../lib/test/pages/BlockPage');
 
 describe('basic UI tests', () => {
-  let insightNode;
-
   let url;
   let browser;
   let blockHash;
@@ -19,6 +17,7 @@ describe('basic UI tests', () => {
   let blockPage;
   let trxHash;
 
+  // eslint-disable-next-line no-undef
   before(async () => {
     browser = await new Builder().forBrowser(Browser.CHROME).build();
     url = 'http://insight.testnet.networks.dash.org:3001/insight/';
@@ -33,7 +32,6 @@ describe('basic UI tests', () => {
     });
 
     it('should be able to open block page', async () => {
-      topPanel = new TopPanel(browser);
       await topPanel.openBlockPage();
       const title = await browser.getTitle();
       expect(title).equal('Home | Insight');
