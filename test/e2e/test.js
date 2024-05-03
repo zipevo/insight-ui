@@ -9,6 +9,8 @@ const StatusPage = require('../../lib/test/pages/StatusPage');
 const BlockPage = require('../../lib/test/pages/BlockPage');
 
 describe('basic UI tests', () => {
+  let insightNode;
+
   let url;
   let browser;
   let blockHash;
@@ -36,7 +38,6 @@ describe('basic UI tests', () => {
       const title = await browser.getTitle();
       expect(title).equal('Home | Insight');
     });
-
 
     it('should be able to open status page', async () => {
       await topPanel.openStatusPage();
@@ -126,10 +127,13 @@ describe('basic UI tests', () => {
       topPanel = new TopPanel(browser);
 
       topPanel.search(blockIdToSearch);
+
       await wait(5000);
       blockPage = new BlockPage(browser);
 
       const currentUrl = await browser.getCurrentUrl();
+      expect(currentUrl).equal(`${url}block/${blockHash}`);
+
       const blockId = (await blockPage.getBlockId()).replace('Block #', '');
       expect(blockId).equal(blockIdToSearch);
       blockHash = await blockPage.getBlockHash();

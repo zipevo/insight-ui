@@ -44,6 +44,12 @@ jobs:
       - name: Run ESLinter
         run: npm run lint
 
+      - name: Use https instead of git protocol fo git
+        run: git config --global url."https://".insteadOf git://
+
+      - name: Build project
+        run: npm run build
+
       - name: Run tests
         run: npm run test
 
@@ -81,6 +87,9 @@ jobs:
             const [, major, minor] = tag.match(/^v([0-9]+)\.([0-9]+)/);
             return (tag.includes('dev') ? `${major}.${minor}-dev` : 'latest');
 
+      - name: Use https instead of git protocol fo git
+        run: git config --global url."https://".insteadOf git://
+
       - name: Publish NPM package
         uses: JS-DevTools/npm-publish@v1
         with:
@@ -101,7 +110,7 @@ jobs:
       - name: Set up Docker BuildX
         uses: docker/setup-buildx-action@v1
         with:
-          version: v0.6.1
+          version: v0.7.0
           install: true
           driver-opts: image=moby/buildkit:buildx-stable-1
 
