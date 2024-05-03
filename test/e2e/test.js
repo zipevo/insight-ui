@@ -32,6 +32,7 @@ describe('basic UI tests', () => {
     });
 
     it('should be able to open block page', async () => {
+      topPanel = new TopPanel(browser);
       await topPanel.openBlockPage();
       const title = await browser.getTitle();
       expect(title).equal('Home | Insight');
