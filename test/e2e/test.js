@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const {
   Builder, Browser,
 } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const wait = require('../../lib/test/util/wait');
 
 const TopPanel = require('../../lib/test/pages/TopPanel');
@@ -19,7 +20,15 @@ describe('basic UI tests', () => {
 
   // eslint-disable-next-line no-undef
   before(async () => {
-    browser = await new Builder().forBrowser(Browser.CHROME).build();
+    browser = await new Builder()
+      .forBrowser(Browser.CHROME)
+      .setChromeOptions(new chrome.Options()
+        .addArguments('--headless')
+        .windowSize({
+          width: 1280,
+          height: 720,
+        }))
+      .build();
     url = 'http://insight.testnet.networks.dash.org:3001/insight/';
   });
 
