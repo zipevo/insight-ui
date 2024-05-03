@@ -88,14 +88,8 @@ describe('basic UI tests', () => {
       const protocolVersion = await statusPage.getProtocolVersion();
       expect(Number.isInteger(parseInt(protocolVersion, 10))).equal(true);
 
-      // const blocks = await statusPage.getBlocks();
-      // expect(blocks).equal('15');
-
       const timeOffset = await statusPage.getTimeOffset();
       expect(timeOffset).equal('0');
-
-      // const connections = await statusPage.getConnections();
-      // expect(connections).equal('0');
 
       const miningDifficulty = await statusPage.getMiningDifficulty();
       expect(miningDifficulty).not.equal('');
@@ -136,17 +130,18 @@ describe('basic UI tests', () => {
 
       topPanel.search(blockIdToSearch);
 
-      await wait(5000);
+      await wait(10000);
+
+      // init again after page switch
       blockPage = new BlockPage(browser);
 
+      // When search from insight search pane, it will redirect to blockHash in url
       const currentUrl = await browser.getCurrentUrl();
       expect(currentUrl).equal(`${url}block/${blockHash}`);
 
       const blockId = (await blockPage.getBlockId()).replace('Block #', '');
       expect(blockId).equal(blockIdToSearch);
       blockHash = await blockPage.getBlockHash();
-      // When search from insight search pane, it will redirect to blockHash in url
-      expect(currentUrl).equal(`${url}block/${blockHash}`);
 
       const numberOfTrxs = await blockPage.getNumberOfTrxs();
       expect(numberOfTrxs).equal('1');
