@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:20-alpine
 
 RUN apk add --update --no-cache git \
                                 libzmq \
@@ -25,7 +25,7 @@ ARG MAJOR_VERSION
 RUN bin/dashcore-node install @dashevo/insight-api@${MAJOR_VERSION}
 RUN bin/dashcore-node install @dashevo/insight-ui@${VERSION}
 
-FROM node:16-alpine
+FROM node:20-alpine
 
 LABEL maintainer="Dash Developers <dev@dash.org>"
 LABEL description="Dockerised Insight-Dash"

@@ -1,68 +1,35 @@
 const { expect } = require('chai');
-
-const path = require('path');
-
-const startInsightNode = require('../../lib/test/startInsightNode');
+const {
+  Builder, Browser,
+} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const wait = require('../../lib/test/util/wait');
 
-const topPanel = require('../../lib/test/pages/TopPanel');
-const blockPage = require('../../lib/test/pages/BlockPage');
-const statusPage = require('../../lib/test/pages/StatusPage');
-
-let originalTimeout;
+const TopPanel = require('../../lib/test/pages/TopPanel');
+const StatusPage = require('../../lib/test/pages/StatusPage');
+const BlockPage = require('../../lib/test/pages/BlockPage');
 
 describe('basic UI tests', () => {
-  let insightNode;
-
   let url;
+  let browser;
   let blockHash;
+  let topPanel;
+  let statusPage;
+  let blockPage;
   let trxHash;
 
-  beforeAll(async () => {
-    const rootPath = path.resolve(path.join(__dirname, '..', '..'));
-
-    const insighUIOptions = {
-      container: {
-        volumes: [
-          `${rootPath}/dashcore-node:/insight/node_modules/@dashevo/insight-ui/dashcore-node`,
-          `${rootPath}/po:/insight/node_modules/@dashevo/insight-ui/po`,
-          `${rootPath}/public:/insight/node_modules/@dashevo/insight-ui/public`,
-        ],
-      },
-    };
-
-    insightNode = await startInsightNode({
-      insightUI: insighUIOptions,
-    });
-
-    url = `http://127.0.0.1:${insightNode.insightUI.options.getUiPort()}/insight/`;
-
-    const dashCoreRpcClient = insightNode.dashCore.getApi();
-
-    await dashCoreRpcClient.createwallet('test');
-
-    const { result: address } = await dashCoreRpcClient.getNewAddress();
-
-    await dashCoreRpcClient.generateToAddress(15, address);
-  });
-
-  afterAll(async () => {
-    const instances = [
-      insightNode,
-    ];
-
-    await Promise.all(instances.filter(i => i)
-      .map(i => i.remove()));
-  });
-
-  beforeEach(async () => {
-    await browser.waitForAngularEnabled(false);
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 250000;
-  });
-
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+  // eslint-disable-next-line no-undef
+  before(async () => {
+    browser = await new Builder()
+      .forBrowser(Browser.CHROME)
+      .setChromeOptions(new chrome.Options()
+        .addArguments('--headless')
+        .windowSize({
+          width: 1280,
+          height: 720,
+        }))
+      .build();
+    url = 'http://insight.testnet.networks.dash.org:3001/insight/';
   });
 
   describe('Home Page', () => {
@@ -74,6 +41,7 @@ describe('basic UI tests', () => {
     });
 
     it('should be able to open block page', async () => {
+      topPanel = new TopPanel(browser);
       await topPanel.openBlockPage();
       const title = await browser.getTitle();
       expect(title).equal('Home | Insight');
@@ -84,6 +52,8 @@ describe('basic UI tests', () => {
       await wait(10000); // time to complete sync
       const title = await browser.getTitle();
       expect(title).equal('Status | Insight');
+
+      statusPage = new StatusPage(browser);
 
       const syncProgress = await statusPage.getSyncProgress();
       expect(syncProgress).equal('100% Complete');
@@ -118,14 +88,8 @@ describe('basic UI tests', () => {
       const protocolVersion = await statusPage.getProtocolVersion();
       expect(Number.isInteger(parseInt(protocolVersion, 10))).equal(true);
 
-      const blocks = await statusPage.getBlocks();
-      expect(blocks).equal('15');
-
       const timeOffset = await statusPage.getTimeOffset();
       expect(timeOffset).equal('0');
-
-      const connections = await statusPage.getConnections();
-      expect(connections).equal('0');
 
       const miningDifficulty = await statusPage.getMiningDifficulty();
       expect(miningDifficulty).not.equal('');
@@ -139,11 +103,14 @@ describe('basic UI tests', () => {
       const infoErrors = await statusPage.getInfoErrors();
       expect(infoErrors).equal('');
     });
+
     it('should be able to route to block number', async () => {
       const blockIdToSearch = '12';
 
       await browser.get(`${url}block/${blockIdToSearch}`);
       await wait(10000);
+
+      blockPage = new BlockPage(browser);
 
       const currentUrl = await browser.getCurrentUrl();
       expect(currentUrl).equal(`${url}block/${blockIdToSearch}`);
@@ -156,12 +123,17 @@ describe('basic UI tests', () => {
 
       expect(nextBlock).equal(`${parseInt(blockId, 10) + 1}`);
     });
+
     it('should be able search by block number', async () => {
       const blockIdToSearch = '12';
+      topPanel = new TopPanel(browser);
 
       topPanel.search(blockIdToSearch);
 
       await wait(10000);
+
+      // init again after page switch
+      blockPage = new BlockPage(browser);
 
       // When search from insight search pane, it will redirect to blockHash in url
       const currentUrl = await browser.getCurrentUrl();
