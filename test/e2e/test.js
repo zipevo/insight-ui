@@ -29,7 +29,7 @@ describe('basic UI tests', () => {
           height: 720,
         }))
       .build();
-    url = 'http://insight.testnet.networks.dash.org:3001/insight/';
+    url = 'http://insight.testnet.networks.zip.org:3001/insight/';
   });
 
   describe('Home Page', () => {
@@ -150,7 +150,7 @@ describe('basic UI tests', () => {
       expect(height).equal(`${blockIdToSearch} (Mainchain)`);
 
       const blockReward = await blockPage.getBlockReward();
-      expect(blockReward).equal('500 DASH');
+      expect(blockReward).equal('500 ZIP');
 
       const timestamp = await blockPage.getTimestamp();
       expect(timestamp).not.equal('');
@@ -193,7 +193,7 @@ describe('basic UI tests', () => {
       expect(height).equal(`${blockIdToSearch} (Mainchain)`);
 
       const blockReward = await blockPage.getBlockReward();
-      expect(blockReward).equal('500 DASH');
+      expect(blockReward).equal('500 ZIP');
 
       const timestamp = await blockPage.getTimestamp();
       expect(timestamp).not.equal('');

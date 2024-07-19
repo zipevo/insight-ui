@@ -2,17 +2,17 @@
   "network": "livenet",
   "port": 3001,
   "services": [
-    "dashd",
-    "@dashevo/insight-api",
-    "@dashevo/insight-ui",
+    "zipd",
+    "@zipevo/insight-api",
+    "@zipevo/insight-ui",
     "web"
   ],
   "servicesConfig": {
-    "dashd": {
+    "zipd": {
       "connect": [{
         "rpchost": "127.0.0.1",
         "rpcport": 9998,
-        "rpcuser": "dashrpc",
+        "rpcuser": "ziprpc",
         "rpcpassword": "password",
         "zmqpubrawtx": "tcp://127.0.0.1:29998",
         "zmqpubhashblock": "tcp://127.0.0.1:29998"
