@@ -3,8 +3,8 @@
   "port": 3001,
   "services": [
     "zipd",
-    "@zipevo/insight-api",
-    "@zipevo/insight-ui",
+    "@zipeva/insight-api",
+    "@zipeva/insight-ui",
     "web"
   ],
   "servicesConfig": {

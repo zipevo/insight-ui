@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Check NPM package lock version is updated
-        uses: zipevo/gh-action-check-package-lock@v1
+        uses: zipeva/gh-action-check-package-lock@v1
 
       - name: Install NPM dependencies
         run: npm ci
@@ -141,7 +141,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v3
         with:
-          images: zipevo/insight
+          images: zipeva/insight
           tags: |
             type=match,pattern=v(\d+),group=1
             type=match,pattern=v(\d+.\d+),group=1

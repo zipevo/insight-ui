@@ -18,7 +18,7 @@ var InsightUI = function(options) {
   }
 };
 
-InsightUI.dependencies = ['@zipevo/insight-api'];
+InsightUI.dependencies = ['@zipeva/insight-api'];
 
 inherits(InsightUI, BaseService);
 

@@ -10,7 +10,7 @@ RUN apk add --update --no-cache git \
 WORKDIR /insight
 
 # Copy zipcore-node
-RUN git clone --branch master --single-branch --depth 1 https://github.com/zipevo/zipcore-node.git .
+RUN git clone --branch master --single-branch --depth 1 https://github.com/zipeva/zipcore-node.git .
 
 # Copy config file
 COPY zipcore-node.json .
@@ -22,8 +22,8 @@ ARG VERSION
 ARG MAJOR_VERSION
 
 # Install Insight modules
-RUN bin/zipcore-node install @zipevo/insight-api@${MAJOR_VERSION}
-RUN bin/zipcore-node install @zipevo/insight-ui@${VERSION}
+RUN bin/zipcore-node install @zipeva/insight-api@${MAJOR_VERSION}
+RUN bin/zipcore-node install @zipeva/insight-ui@${VERSION}
 
 FROM node:20-alpine
 

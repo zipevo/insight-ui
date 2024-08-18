@@ -1,21 +1,21 @@
 # Insight UI
 
-A Zip blockchain explorer web application service for [Zipcore Node](https://github.com/zipevo/zipcore-node) using [Insight API](https://github.com/zipevo/insight-api).
+A Zip blockchain explorer web application service for [Zipcore Node](https://github.com/zipeva/zipcore-node) using [Insight API](https://github.com/zipeva/insight-api).
 
 ## Quick Start
 
-Please see the guide at [https://bitcore.io/guides/full-node](https://bitcore.io/guides/full-node) for information about getting a block explorer running. This is only the front-end component of the block explorer, and is packaged together with all of the necessary components in [Zipcore](https://github.com/zipevo/zipcore).
+Please see the guide at [https://bitcore.io/guides/full-node](https://bitcore.io/guides/full-node) for information about getting a block explorer running. This is only the front-end component of the block explorer, and is packaged together with all of the necessary components in [Zipcore](https://github.com/zipeva/zipcore).
 
 ## Getting Started
 
 To manually install all of the necessary components, you can run these commands:
 
 ```bash
-npm install -g @zipevo/zipcore-node
+npm install -g @zipeva/zipcore-node
 zipcore-node create mynode
 cd mynode
-zipcore-node install @zipevo/insight-api
-zipcore-node install @zipevo/insight-ui
+zipcore-node install @zipeva/insight-api
+zipcore-node install @zipeva/insight-ui
 zipcore-node start
 ```
 
@@ -70,11 +70,11 @@ compile***.
 
 ## Note
 
-For more details about the [Insight API](https://github.com/zipevo/insight-api) configuration and end-points, go to [Insight API GitHub repository](https://github.com/zipevo/insight-api).
+For more details about the [Insight API](https://github.com/zipeva/insight-api) configuration and end-points, go to [Insight API GitHub repository](https://github.com/zipeva/insight-api).
 
 ## Contribute
 
-Contributions and suggestions are welcomed at the [Insight UI Zip GitHub repository](https://github.com/zipevo/insight-ui).
+Contributions and suggestions are welcomed at the [Insight UI Zip GitHub repository](https://github.com/zipeva/insight-ui).
 
 
 ## License
